@@ -1,4 +1,5 @@
 import Link from "next/link";
+import S from "./events-item.module.scss";
 
 function EventItem(props) {
   const { id, title, image, date, location } = props.data;
@@ -13,19 +14,19 @@ function EventItem(props) {
   const exploreLink = `/events/${id}`;
 
   return (
-    <li>
+    <li className={S.item}>
       <img src={"/" + image} alt={title} />
-      <div>
+      <div className={S.content}>
         <div>
           <h2>{title}</h2>
         </div>
         <div>
-          <time>{humanReadableDate}</time>
+          <time className={S.date}>{humanReadableDate}</time>
         </div>
         <div>
-          <address>{formattedAddress}</address>
+          <address className={S.address}>{formattedAddress}</address>
         </div>
-        <div>
+        <div className={S.action}>
           <Link href={exploreLink}>Explore Event</Link>
         </div>
       </div>
