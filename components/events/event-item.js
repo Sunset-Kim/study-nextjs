@@ -1,7 +1,7 @@
 import Link from "next/link";
 import LinkButton from "../ui/button/link-button";
 import { AddressIcon, ArrowRightIcon, DateIcon } from "../ui/icons";
-import S from "./events-item.module.scss";
+import S from "./event-item.module.scss";
 
 function EventItem(props) {
   const { id, title, image, date, location } = props.data;
