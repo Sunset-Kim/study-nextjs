@@ -17,6 +17,7 @@ export default function Home(props) {
 
 // 1. 먼저실행
 export async function getStaticProps(contenxt) {
+  console.log("(Re-)Generating");
   const filePath = path.join(process.cwd(), "data", "dummy-backend.json");
   const jsonData = await fs.readFile(filePath);
   const data = JSON.parse(jsonData);
@@ -25,5 +26,6 @@ export async function getStaticProps(contenxt) {
     props: {
       products: data.products,
     },
+    revalidate: 10, // second
   };
 }
