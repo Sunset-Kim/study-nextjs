@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs/promises";
 import styles from "../styles/Home.module.css";
+import Link from "next/link";
 
 // 2. getStaticProps 에서 만들어진  props를 전달받음
 export default function Home(props) {
@@ -8,7 +9,9 @@ export default function Home(props) {
     <div className={styles.container}>
       <ul>
         {props.products.map((item) => (
-          <li key={item.id}>{item.title}</li>
+          <li key={item.id}>
+            <Link href={item.id}>{item.title}</Link>
+          </li>
         ))}
       </ul>
     </div>
