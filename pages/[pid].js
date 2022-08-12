@@ -28,9 +28,17 @@ export async function getStaticProps(context) {
   const { params } = context;
   const { pid } = params;
 
+  const product = data.products.find((item) => item.id == pid);
+
+  if (!product) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
-      data: data.products.find((item) => item.id == pid),
+      data: product,
     },
   };
 }
@@ -44,7 +52,7 @@ export async function getStaticPaths() {
 
   return {
     paths: params,
-    fallback: false, // 포함되지 않은 path도 방문시에 생성한다
+    fallback: true, // 포함되지 않은 path도 방문시에 생성한다
   };
 }
 
