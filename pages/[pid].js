@@ -15,12 +15,18 @@ function ProductDetailPage(props) {
   );
 }
 
-export async function getStaticProps(context) {
-  const { params } = context;
-  const pid = params.pid;
+async function getData() {
   const filePath = path.join(process.cwd(), "data", "dummy-backend.json");
-  const file = await fs.readFile(filePath);
-  const data = JSON.parse(file);
+  const jsonData = await fs.readFile(filePath);
+  const data = JSON.parse(jsonData);
+
+  return data;
+}
+
+export async function getStaticProps(context) {
+  const data = await getData();
+  const { params } = context;
+  const { pid } = params;
 
   return {
     props: {
@@ -30,9 +36,15 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
+  const data = await getData();
+  const ids = data.products.map((item) => item.id);
+  const params = ids.map((id) => ({
+    params: { pid: id },
+  }));
+
   return {
-    paths: [{ params: { pid: "p1" } }],
-    fallback: "blocking", // 포함되지 않은 path도 방문시에 생성한다
+    paths: params,
+    fallback: false, // 포함되지 않은 path도 방문시에 생성한다
   };
 }
 
