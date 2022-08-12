@@ -3,6 +3,10 @@ import path from "path";
 
 function ProductDetailPage(props) {
   console.log(props.data);
+
+  if (!props.data) {
+    return <p>아직</p>;
+  }
   return (
     <div>
       <h1>{props.data.title}</h1>
@@ -27,8 +31,8 @@ export async function getStaticProps(context) {
 
 export async function getStaticPaths() {
   return {
-    paths: [{ params: { pid: "p1" } }, { params: { pid: "p2" } }, { params: { pid: "p3" } }],
-    fallback: false,
+    paths: [{ params: { pid: "p1" } }],
+    fallback: "blocking", // 포함되지 않은 path도 방문시에 생성한다
   };
 }
 
