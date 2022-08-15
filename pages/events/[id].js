@@ -30,14 +30,16 @@ function EventsDetailPage(props) {
 
 export default EventsDetailPage;
 
-export async function getServerSideProps(req, res) {
+export async function getStaticProps(context) {
   const {
     params: { id },
-  } = req;
-  const events = await eventService.fetchEvents();
-  const data = events.find((event) => event.id === id);
+  } = context;
 
-  if (!data) {
+  const data = await eventService.fetchEventsById(id);
+
+  console.log("############## \n", data);
+
+  if (!data || data.length === 0) {
     return {
       notFound: true,
     };
@@ -45,7 +47,19 @@ export async function getServerSideProps(req, res) {
 
   return {
     props: {
-      data,
+      data: data[0],
     },
+  };
+}
+
+export async function getStaticPaths() {
+  const events = await eventService.fetchAllEvents();
+  const paths = events.map((event) => ({
+    params: { id: event.id },
+  }));
+
+  return {
+    paths,
+    fallback: false,
   };
 }

@@ -26,7 +26,7 @@ function EventsPage(props) {
 export default EventsPage;
 
 export async function getStaticProps() {
-  const events = await eventService.fetchEvents();
+  const events = await eventService.fetchAllEvents();
 
   return {
     props: { events },

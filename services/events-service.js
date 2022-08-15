@@ -5,7 +5,7 @@ class EventsService {
     this.data = data;
   }
 
-  async fetchEvents() {
+  async fetchAllEvents() {
     return new Promise(async (resolve, reject) => {
       try {
         const response = await fetch(
@@ -23,6 +23,22 @@ class EventsService {
   getFeaturedEvents() {
     if (!this.data) return;
     return this.data.map((event) => (event.isFeatured ? event : undefined)).filter((item) => item);
+  }
+
+  async fetchEventsById(id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(
+          `https://nextjs-b302d-default-rtdb.asia-southeast1.firebasedatabase.app/events.json?orderBy="id"&equalTo="${id}"`
+        );
+        const json = await response.json();
+        const event = Object.entries(json).map(([key, value]) => value);
+
+        resolve(event);
+      } catch {
+        reject(error);
+      }
+    });
   }
 }
 

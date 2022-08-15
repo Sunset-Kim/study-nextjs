@@ -23,7 +23,7 @@ export async function getServerSideProps(req, res) {
     };
   }
 
-  const events = await eventService.fetchEvents();
+  const events = await eventService.fetchAllEvents();
   const data = events.find((event) => {
     const date = event.date.split("-");
     if (date[0] === slug[0] && date[1] === slug[1]) {

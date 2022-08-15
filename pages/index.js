@@ -18,7 +18,7 @@ export default function Home(props) {
     async function fetch() {
       try {
         setIsLoading(true);
-        const data = await eventsService.fetchEvents();
+        const data = await eventsService.fetchAllEvents();
         setFeaturedEvents(eventsService.getFeaturedEvents());
         setIsLoading(false);
       } catch {
