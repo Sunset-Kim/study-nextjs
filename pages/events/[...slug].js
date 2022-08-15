@@ -1,15 +1,43 @@
 import { useRouter } from "next/router";
+import EventList from "../../components/events/event-list";
+import EventsService from "../../services/events-service";
 
-function EventsFilteredPage() {
-  const router = useRouter();
+const eventService = new EventsService();
 
-  console.log(router.query);
-
+function EventsFilteredPage(props) {
   return (
     <div>
-      <h1>여기는 이벤트의 필터링된 목록을 보여준다</h1>
+      <EventList items={[props.data]} />
     </div>
   );
 }
 
 export default EventsFilteredPage;
+
+export async function getServerSideProps(req, res) {
+  const { slug } = req.params;
+
+  if (!slug || slug.length > 2) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const events = await eventService.fetchAllEvents();
+  const data = events.find((event) => {
+    const date = event.date.split("-");
+    if (date[0] === slug[0] && date[1] === slug[1]) {
+      return event;
+    }
+  });
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: { data },
+  };
+}

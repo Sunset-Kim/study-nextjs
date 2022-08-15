@@ -3,12 +3,17 @@ import EventSummary from "../../components/events/event-summary";
 import EventLogistics from "../../components/events/event-logistics";
 import EventContent from "../../components/events/event-content";
 import { getEventById } from "../../mock/data-dummy";
+import EventsService from "../../services/events-service";
 
-function EventsDetailPage() {
+const eventService = new EventsService();
+
+function EventsDetailPage(props) {
+  const detailPageData = props.data;
   const router = useRouter();
 
-  console.log(router.query);
-  const detailPageData = getEventById(router.query.id);
+  if (router.isFallback) {
+    return <p>로딩중!!</p>;
+  }
 
   if (!detailPageData) {
     return (
@@ -29,3 +34,35 @@ function EventsDetailPage() {
 }
 
 export default EventsDetailPage;
+
+export async function getStaticProps(context) {
+  const {
+    params: { id },
+  } = context;
+
+  const data = await eventService.fetchEventsById(id);
+
+  if (!data || data.length === 0) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      data: data[0],
+    },
+  };
+}
+
+export async function getStaticPaths() {
+  const events = await eventService.fetchFeaturedEvents();
+  const paths = events.map((event) => ({
+    params: { id: event.id },
+  }));
+
+  return {
+    paths,
+    fallback: true,
+  };
+}
