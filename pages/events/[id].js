@@ -3,12 +3,12 @@ import EventSummary from "../../components/events/event-summary";
 import EventLogistics from "../../components/events/event-logistics";
 import EventContent from "../../components/events/event-content";
 import { getEventById } from "../../mock/data-dummy";
+import EventsService from "../../services/events-service";
 
-function EventsDetailPage() {
-  const router = useRouter();
+const eventService = new EventsService();
 
-  console.log(router.query);
-  const detailPageData = getEventById(router.query.id);
+function EventsDetailPage(props) {
+  const detailPageData = props.data;
 
   if (!detailPageData) {
     return (
@@ -29,3 +29,23 @@ function EventsDetailPage() {
 }
 
 export default EventsDetailPage;
+
+export async function getServerSideProps(req, res) {
+  const {
+    params: { id },
+  } = req;
+  const events = await eventService.fetchEvents();
+  const data = events.find((event) => event.id === id);
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      data,
+    },
+  };
+}
