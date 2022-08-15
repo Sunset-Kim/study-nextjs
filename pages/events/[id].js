@@ -9,6 +9,11 @@ const eventService = new EventsService();
 
 function EventsDetailPage(props) {
   const detailPageData = props.data;
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return <p>로딩중!!</p>;
+  }
 
   if (!detailPageData) {
     return (
@@ -37,8 +42,6 @@ export async function getStaticProps(context) {
 
   const data = await eventService.fetchEventsById(id);
 
-  console.log("############## \n", data);
-
   if (!data || data.length === 0) {
     return {
       notFound: true,
@@ -53,13 +56,13 @@ export async function getStaticProps(context) {
 }
 
 export async function getStaticPaths() {
-  const events = await eventService.fetchAllEvents();
+  const events = await eventService.fetchFeaturedEvents();
   const paths = events.map((event) => ({
     params: { id: event.id },
   }));
 
   return {
     paths,
-    fallback: false,
+    fallback: true,
   };
 }

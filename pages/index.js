@@ -18,8 +18,8 @@ export default function Home(props) {
     async function fetch() {
       try {
         setIsLoading(true);
-        const data = await eventsService.fetchAllEvents();
-        setFeaturedEvents(eventsService.getFeaturedEvents());
+        const data = await eventsService.fetchFeaturedEvents();
+        setFeaturedEvents(data);
         setIsLoading(false);
       } catch {
         setIsLoading(false);
@@ -48,19 +48,7 @@ export default function Home(props) {
 }
 
 export async function getStaticProps() {
-  const featuredEvents = [];
-
-  const result = await fetch("https://nextjs-b302d-default-rtdb.asia-southeast1.firebasedatabase.app/events.json", {
-    method: "get",
-  });
-  const events = await result.json();
-
-  for (const key in events) {
-    const value = events[key];
-    if (value.isFeatured) {
-      featuredEvents.push(value);
-    }
-  }
+  const featuredEvents = await eventsService.fetchFeaturedEvents();
 
   return {
     props: { events: featuredEvents },

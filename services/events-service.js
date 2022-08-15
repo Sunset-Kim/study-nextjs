@@ -20,9 +20,19 @@ class EventsService {
     });
   }
 
-  getFeaturedEvents() {
-    if (!this.data) return;
-    return this.data.map((event) => (event.isFeatured ? event : undefined)).filter((item) => item);
+  async fetchFeaturedEvents() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const response = await fetch(
+          "https://nextjs-b302d-default-rtdb.asia-southeast1.firebasedatabase.app/events.json"
+        );
+        const events = await response.json();
+
+        resolve(events.filter((event) => event.isFeatured));
+      } catch (error) {
+        reject(error);
+      }
+    });
   }
 
   async fetchEventsById(id) {
