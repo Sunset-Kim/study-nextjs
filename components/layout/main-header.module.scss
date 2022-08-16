@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   padding: 1rem 10%;
   height: 5rem;
   background-color: #222;
@@ -22,10 +22,28 @@
   }
 }
 
-.nav a {
-  text-decoration: none;
-  color: $white;
-  font-size: 1rem;
+.nav {
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+  }
+
+  li {
+    flex: 1;
+    list-style: none;
+
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+
+    a {
+      font-size: 13px;
+      text-decoration: none;
+      color: $white;
+    }
+  }
 }
 
 @media (min-width: 768px) {
@@ -33,7 +51,9 @@
     font-size: 2.5rem;
   }
 
-  .nav a {
-    font-size: 1.5rem;
+  .nav {
+    ul li a {
+      font-size: 16px;
+    }
   }
 }
