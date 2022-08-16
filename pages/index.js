@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import EventList from "../components/events/event-list";
 import EventsService from "../services/events-service";
@@ -42,6 +41,10 @@ export default function Home(props) {
 
   return (
     <div>
+      <Head>
+        <title>NextJs - events</title>
+        <meta name="description" content="연습해서 잘하자" />
+      </Head>
       <EventList items={featuredEvents} />
     </div>
   );
