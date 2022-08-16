@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Image from "next/image";
 import LinkButton from "../ui/button/link-button";
 import { AddressIcon, ArrowRightIcon, DateIcon } from "../ui/icons";
 import S from "./event-item.module.scss";
@@ -17,7 +17,7 @@ function EventItem(props) {
 
   return (
     <li className={S.item}>
-      <img src={"/" + image} alt={title} />
+      <Image src={"/" + image} alt={title} width={250} height={160} />
       <div className={S.content}>
         <div>
           <h2>{title}</h2>
