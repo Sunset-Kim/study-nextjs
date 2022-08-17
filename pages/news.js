@@ -1,6 +1,7 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 function News() {
+  const [news, setNews] = useState();
   const eamilInput = useRef();
   const feedbackInput = useRef();
 
@@ -22,6 +23,16 @@ function News() {
     });
   }
 
+  async function loadFeedbackHanlder() {
+    const result = await fetch("/api/feedback");
+    const data = await result.json();
+
+    setNews(data.feedback);
+
+    return data.feedback;
+  }
+  console.log(news);
+
   return (
     <div>
       <form onSubmit={submitFormHanlder}>
@@ -35,6 +46,17 @@ function News() {
         </div>
         <button>Send Feedback</button>
       </form>
+      <hr />
+      <div>
+        <button onClick={loadFeedbackHanlder}>Load Feedback</button>
+      </div>
+
+      <ul>
+        {news &&
+          news.map((item) => {
+            return <li key={item}>{item.email}</li>;
+          })}
+      </ul>
     </div>
   );
 }
