@@ -9,9 +9,14 @@ function MainHeader() {
       </div>
 
       <nav className={S.nav}>
-        <li>
-          <Link href="/events">Browse All Events</Link>
-        </li>
+        <ul>
+          <li>
+            <Link href="/events">Browse All Events</Link>
+          </li>
+          <li>
+            <Link href="/news">News Letter</Link>
+          </li>
+        </ul>
       </nav>
     </header>
   );
