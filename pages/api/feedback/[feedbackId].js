@@ -1,4 +1,4 @@
-import { buildFeedbackPath, extractFeedback } from "./feedback";
+import { buildFeedbackPath, extractFeedback } from ".";
 
 export default function handler(req, res) {
   if (req.method !== "GET") res.status(404).send();

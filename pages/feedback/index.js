@@ -6,7 +6,7 @@ function Feedback(props) {
   const [selectedFeedback, setSelectedFeedback] = useState();
 
   const loadFeedbackHandler = (id) => {
-    fetch(`/api/${id}`)
+    fetch(`/api/feedback/${id}`)
       .then((res) => res.json())
       .then((data) => {
         setSelectedFeedback(data.result);
