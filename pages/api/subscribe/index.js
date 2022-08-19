@@ -1,26 +1,28 @@
-import path from "path";
-import fs from "fs/promises";
+import { MongoClient, ServerApi, ServerApiVersion } from "mongodb";
+import app_config from "../../../config";
 
-const filePath = path.join(process.cwd(), "data", "email.json");
+const uri = `mongodb+srv://test:${app_config.db.password}@cluster0.b3sw1.mongodb.net/?retryWrites=true&w=majority`;
+
+const client = new MongoClient(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverApi: ServerApiVersion.v1,
+});
 
 export default async function subscribe(req, res) {
   if (req.method === "POST") {
     try {
-      const eamilFile = await fs.readFile(filePath, "utf-8");
-      const jsonResult = JSON.parse(eamilFile);
-      jsonResult.push(req.body);
-      await fs.writeFile(filePath, JSON.stringify(jsonResult));
+      const { email } = req.body;
+      await client.connect();
+      const db = client.db();
+      await db.collection("emails").insertOne({ email });
 
-      res.status(201).json(jsonResult);
+      client.close();
     } catch {
-      const newContent = [req.body];
-      fs.writeFile(filePath, JSON.stringify(newContent), (err) => {
-        if (err) {
-          console.error(err);
-        }
-        console.log("완료");
-      });
+      res.status(500).json({ message: "db error" });
     }
+
+    res.status(201).json({ email });
   } else {
     res.status(400).send();
   }
