@@ -1,7 +1,11 @@
 import S from "./button.module.scss";
 
-function LinkButton(props) {
-  return <button className={S.btn__link}>{props.children}</button>;
+function Button({ childern, ...props }) {
+  return (
+    <button className={S.btn__link} {...props}>
+      {props.children}
+    </button>
+  );
 }
 
-export default LinkButton;
+export default Button;
