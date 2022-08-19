@@ -13,7 +13,10 @@ function Comments(props) {
     if (showComments) {
       fetch(`/api/comments/${eventId}`)
         .then((res) => res.json())
-        .then((data) => setComments(data));
+        .then((data) => {
+          if (!Array.isArray(data)) return;
+          setComments(data);
+        });
     }
   }, [showComments]);
 
