@@ -16,6 +16,7 @@
   "devDependencies": {
     "eslint": "8.21.0",
     "eslint-config-next": "12.2.4",
+    "mongodb": "^4.9.0",
     "sass": "^1.54.3"
   }
 }
