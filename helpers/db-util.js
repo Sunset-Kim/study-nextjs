@@ -2,7 +2,7 @@ import { MongoClient, ServerApiVersion } from "mongodb";
 import app_config from "../config";
 
 async function dbConnect() {
-  const uri = `mongodb+srv://tst:${app_config.db.password}@cluster0.b3sw1.mongodb.net/?retryWrites=true&w=majority`;
+  const uri = `mongodb+srv://test:${app_config.db.password}@cluster0.b3sw1.mongodb.net/?retryWrites=true&w=majority`;
 
   const mongoClient = new MongoClient(uri, {
     useNewUrlParser: true,
