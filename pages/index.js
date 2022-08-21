@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import EventList from "../components/events/event-list";
 import NewsletterRegistration from "../components/input/newsletter-registration";
 import EventsService from "../services/events-service";

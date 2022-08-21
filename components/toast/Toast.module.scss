@@ -1,0 +1,49 @@
+$error: #e74c3c;
+$warn: #f1c40f;
+$success: #2ecc71;
+
+.container {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  right: 8px;
+  bottom: 8px;
+  gap: 10px;
+}
+
+.toast {
+  display: flex;
+  width: 300px;
+  color: white;
+  padding: 0.5rem 1rem;
+  box-shadow: 3px 3px 10px 1px rgba(0, 0, 0, 0.2);
+
+  .title {
+    flex: 1;
+    font-size: 15px;
+  }
+
+  .button {
+    flex: 0 0 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    outline: none;
+    background-color: transparent;
+    border: 0;
+    color: white;
+    cursor: pointer;
+  }
+
+  &.error {
+    background-color: $error;
+  }
+  &.pending {
+    background-color: $warn;
+  }
+  &.fullfield {
+    background-color: $success;
+  }
+}
