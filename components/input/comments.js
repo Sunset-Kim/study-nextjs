@@ -29,13 +29,26 @@ function Comments(props) {
   }
 
   function addCommentHandler(commentData) {
+    onOpen("loading", "로딩중");
     fetch(`/api/comments/${eventId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(commentData),
-    });
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("에러");
+        }
+        return res.json();
+      })
+      .then(() => {
+        onOpen("success", "성공");
+      })
+      .catch(() => {
+        onOpen("error", "실패");
+      });
   }
 
   return (
